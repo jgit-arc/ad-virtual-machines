@@ -171,7 +171,7 @@ Click the Run Script button. This will take a while to complete, but you can sti
 
 <p>
 <img src="https://i.imgur.com/Qu17I20.png"/>
-<img src="[img]https://i.imgur.com/7dTpfAc.png[/img]"/>
+<img src="https://i.imgur.com/7dTpfAc.png"/>
 </p>
 
 We want to be able to manage accounts when they have been locked out or when users have forgotten their passwords. This must be configured in the Group Policy Management Console. In DC-1, click Start. Click Run. Enter gpmc.msc and click OK. Right-click Default Domain Policy and click Edit. Expand Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy. There are three primary settings we can configure:
@@ -183,15 +183,15 @@ Reset Account Lockout Counter After
 
 
 <p>
-<img src="https://i.ibb.co/xq8nFDLP/group-access-policy.png"/>
-<img src="https://i.ibb.co/N6tbZWWh/force-group-policy-update.png"/>
+<img src="https://i.imgur.com/DID0SLf.png"/>
+<img src="https://i.imgur.com/548SvjO.png"/>
 </p>
 
 Click Account Lockout Duration. Click Define this Policy Setting. Set the time to 30 minutes. Click Apply and OK. This will automatically adjust the other options: the lockout threshold is 5 attempts, and the reset counter is 10 minutes. We need to force these changes on client-1. Sign into client-1 as the domain account Jane Admin. Click Start. Enter CMD and run CMD as an administrator. In the command prompt, type gpupdate /force and press Enter. This will update the policy. Now, when someone fails a login after a certain number of attempts (set to 5), the account will be locked. In the CMD, enter gpresult /r. Under Applied Group Policy Objects, you will see that the Default Domain Policy is active. Log out of client-1.
 
 
 <p>
-<img src="https://i.ibb.co/23kkKgR9/unlock.png"/>
+<img src="https://i.imgur.com/er2KkzP.png"/>
 </p>
 
 
@@ -201,7 +201,7 @@ Try to log into client-1 with a random user (I recommend using the same user fro
 ## 8. Enabling/Disabling Accounts
 
 <p>
-<img src="https://i.ibb.co/hx53YP7G/disabled.png"/>
+<img src="https://i.imgur.com/c5kxLHS.png"/>
 </p>
 
 
@@ -211,8 +211,8 @@ Part of managing accounts includes enabling them (e.g., for new hires) or disabl
 
 
 <p>
-<img src="https://i.ibb.co/DPpSsYS8/eviewer.png"/>
-<img src="https://i.ibb.co/XZFTht2s/security-login-log.png"/>
+<img src="https://i.imgur.com/7Xwm9bW.png"/>
+<img src="https://i.imgur.com/NnDbnFN.png"/>
 </p>
 
 In DC-1, click Start. Open Event Viewer. Expand Windows Logs. Right-click Security, click Find, and enter the name of the client-1 account you used for the failed login attempts. This will bring up all the logs (not just the failed logins) related to that account. You can select each individual log to get a description of the circumstances surrounding the event.
