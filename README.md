@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.ibb.co/Wg2bpRN/azure.png" />
+<img src="https://i.imgur.com/M3rj4Ua.png" />
 </p>
 
 # Virtual Machines with Mircosoft Azure
@@ -19,7 +19,7 @@ Active Directory is used to centrally manage multiple user accounts in a single 
 ## 1. Setup Domain Controller in Azure
 
 <p>
-<img src="https://i.ibb.co/g9P7SPL/tenant-pyramid.png"/>
+<img src="https://i.imgur.com/43JRoir.png"/>
 </p>
 
 Two virtual machines will be used: one to run Windows Server (DC-1), which will act as the domain controller, and a second that will act as the client (client-1). Both will have virtual network interface cards. By default, the VMs will point to Azure's specific DNS server. In order for client-1 to join the domain, we want the DNS to be set to the domain controller (which will act as a DNS server).
@@ -33,7 +33,7 @@ Go to Virtual Machines. Click Create. Select the subscription you want to use. S
 Go to Virtual Machines. Click Create. Select the recently created ad-lab resource group. Name the VM client-1. Place the VM in the same region you selected for the resource group. Under Image, select Windows 10 Pro. Under Size, select a VM with at least 2 vCPUs. Enter a username and password. For the sake of the walkthrough, I am using 'defaultuser'. If you use something else, do not forget it! Under Licensing, check the box referring to licensing and the confirmation box. Click Networking. Under Virtual network, select the recently created virtual network. Click Review + Create. Click Create.
 
 <p>
-<img src="https://i.ibb.co/sgXTVc9/virtual-network.png"/>
+<img src="https://i.imgur.com/t7p7DBa.png"/>
 </p>
 
 We must set the Domain Controller's (DC-1) NIC private IP address to static. Go back to Virtual Machines and select DC-1. Select Networking. Select Network Settings. Click Network Interface/IP Configuration. Click ipconfig1. Under Private IP Address Settings, change it to Static and click Save.
@@ -45,7 +45,7 @@ Return to Virtual Machines. Select DC-1 and copy its public IP address. Open Rem
 ## 2. Setup Client-1 in Azure
 
 <p>
-<img src="https://i.ibb.co/dMyJN7k/resolving-ticket.png" alt="Resolving Ticket"/>
+<img src="https://i.imgur.com/cy10qxl.png" />
 </p>
 
 Return to Virtual Machines. Select DC-1 and copy its private IP address. Select client-1. Go to Network Settings. Click Network Interface/IP Configuration. Click DNS servers. Click Custom. Paste the private IP address from DC-1. Click Save.
@@ -53,7 +53,7 @@ Return to Virtual Machines. Select DC-1 and copy its private IP address. Select 
 Go back to Virtual Machines. Select the checkbox next to client-1 and click Restart. Click client-1 and copy its public IP address. Open Remote Desktop. Add a separate PC (we'll need to use client-1 and DC-1 simultaneously) and connect to client-1.
 
 <p>
-<img src="https://i.ibb.co/JnHBSss/ping-results.png"/>
+<img src="https://i.imgur.com/GiITZwN.png"/>
 </p>
 
 Return to Virtual Machines. Select DC-1 and copy its private IP address. In client-1's virtual machine, open PowerShell. Enter ping <DC-1's private IP address>. The output should look identical to the screenshot above. If not, the VMs may be on different virtual networks or DC-1's Windows firewall may not have been turned off.
@@ -66,9 +66,9 @@ In PowerShell, enter ipconfig /all. Next to DNS Servers, you should see DC-1's p
 
 
 <p>
-<img src="https://i.ibb.co/3sJXWQP/windows-server.png"/>
-<img src="https://i.ibb.co/rFS0qGM/configuring-server.png"/>
-<img src="https://i.ibb.co/2kf1yGV/server-installation-complete.png"/>
+<img src="ttps://i.imgur.com/2rDpqWs.png"/>
+<img src="https://i.imgur.com/YLJXcI3.png"/>
+<img src="https://i.imgur.com/qm7ejGz.png"/>
 </p>
 
 We will now install Active Directory on the domain controller, create an admin, and join client-1 to the domain. This will allow users (which we will create shortly) on the domain to log in to client-1. If you're not already connected, remote desktop into DC-1. Click Start and enter Server Manager.
@@ -76,8 +76,8 @@ Click Add roles and features. Click Next until you get to Select Destination Ser
 
 
 <p>
-<img src="https://i.ibb.co/SBST2YQ/promote-to-domain-server.png"/>
-<img src="https://i.ibb.co/r3RtHY3/domain-controller-setup.png"/>
+<img src="https://i.imgur.com/BtEHKHr.png"/>
+<img src="https://i.imgur.com/IknVVoG.png"/>
 </p>
 
 DC-1 must be promoted to an actual domain controller (within the virtual machine itself, not Azure). From the Server Manager homepage (screenshot above), click the yellow flag at the top right. Click Promote this Server to a Domain Controller. Click Add a New Forest. Enter a root domain name. I chose mydomain.com for the walkthrough. Click Next.
@@ -91,7 +91,7 @@ Now that the DC-1 VM is a domain controller, users must specify which domain the
 Username: mydomain.com<yourusername> (note the appropriate backslash)
 
 <p>
-<img src="https://i.ibb.co/5cqvKTp/group-policy.png"/>
+<img src="https://i.imgur.com/NVw8Zcq.png"/>
 </p>
 
 After you've signed in, the Group Policy will update. This is expected. Once the process is finished, click Start and select Windows Administrative Tools. Open Active Directory Users and Computers. Click mydomain.com, then click Users. To the right, you will see the account you used to sign in (the primary domain admin account). Right-click mydomain.com, select New, and click Organizational Unit. Enter _EMPLOYEES and click OK. Repeat the same process to create another organizational unit. Enter _ADMINS and click OK.
@@ -106,8 +106,8 @@ We will now create a new user. Right-click the _ADMINS folder, select New, and c
 
 
 <p>
-<img src="https://i.ibb.co/KmCGHwG/creating-domain-user.png"/>
-<img src="https://i.ibb.co/n3qLjZC/add-domain-admin.png"/>
+<img src="https://i.imgur.com/gM8Nc1j.png"/>
+<img src="https://i.imgur.com/WLQJZNv.png"/>
 </p>
 
 
@@ -119,10 +119,9 @@ Log out and sign back in as mydomain.com\jane_admin. This is the account you wil
 
 ## 5. Join client-1 to the domain (mydomain.com)
 
-
 <p>
-<img src="https://i.ibb.co/WDkC8k7/domain-change.png"/>
-<img src="https://i.ibb.co/YLNrTM8/domain-change-2.png"/>
+<img src="https://i.imgur.com/taHeUKV.png"/>
+<img src="https://i.imgur.com/qXEoa7m.png"/>
 </p>
 
 Sign back in to DC-1 as the domain account we just created (mydomain.com\jane_admin). Leave this VM open, as we will need to alternate between the two. Log into client-1 using your original account (defaultuser).
@@ -134,7 +133,7 @@ Because we already changed the DNS settings to use DC-1's private address, the V
 We will now verify that client-1 is part of the domain.
 
 <p>
-<img src="https://i.ibb.co/fSQLBhC/domain-change-3.png"/>
+<img src="https://i.imgur.com/2BKjsOa.png"/>
 </p>
 
 Return to DC-1. Click Start and open Active Directory Users and Computers. Click mydomain.com, then click Computers. You will see client-1. Right-click mydomain.com, select New, and click Organizational Unit. Enter _CLIENTS and click OK.
@@ -145,7 +144,7 @@ Click the Computers folder and drag client-1 into the _CLIENTS folder.
 ## 6. Setup remote desktop for non-admin users on client-1
 
 <p>
-<img src="https://i.ibb.co/YpG5Crd/1.png"/>
+<img src="https://i.imgur.com/925vcT8.png"/>
 </p>
 
 
@@ -156,8 +155,8 @@ Log in to client-1 as mydomain.com\jane_admin. Right-click Start and click Syste
 
 
 <p>
-<img src="https://i.ibb.co/LkRVwnk/2.png"/>
-<img src="https://i.ibb.co/7xTTDmyz/script-with-users.png"/>
+<img src="https://i.imgur.com/HeoQzz2.png"/>
+<img src="https://i.imgur.com/eNMIWUw.png"/>
 </p>
 
 Log in to DC-1 as your domain admin (e.g., jane_admin). Click Start, enter PowerShell. Right-click PowerShell and select Run as Administrator. Click the New File icon in the top left. Open <a href="https://traff.co/0vv9hqIp">this link</a>, copy the text, and paste it into PowerShell. Click Save As, name the file create-users, and save it anywhere on the VM.
@@ -171,8 +170,8 @@ Click the Run Script button. This will take a while to complete, but you can sti
 ## 8. Account Lockouts
 
 <p>
-<img src="https://i.ibb.co/zTnHG7BH/1.png"/>
-<img src="https://i.ibb.co/twC7ctFn/account-lockout-policy.png"/>
+<img src="https://i.imgur.com/Qu17I20.png"/>
+<img src="[img]https://i.imgur.com/7dTpfAc.png[/img]"/>
 </p>
 
 We want to be able to manage accounts when they have been locked out or when users have forgotten their passwords. This must be configured in the Group Policy Management Console. In DC-1, click Start. Click Run. Enter gpmc.msc and click OK. Right-click Default Domain Policy and click Edit. Expand Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy. There are three primary settings we can configure:
